@@ -8,7 +8,7 @@ namespace Portfel.Model
 {
     public class User
     {
-        private readonly int id = 1;
+        private static int id = 1;
         public int Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
@@ -21,7 +21,7 @@ namespace Portfel.Model
             LastName = lastName;
             EMail = eMail;
             Password = password;
-            Id = id++;
+            Id = ++id;
         }
 
 

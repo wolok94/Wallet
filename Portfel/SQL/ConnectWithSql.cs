@@ -17,9 +17,9 @@ namespace Portfel.SQL
             using (SqlConnection conn = new SqlConnection())
             {
                 conn.ConnectionString = connectionString;
-                SqlCommand command = new SqlCommand($"Insert Into Users (Id, FirstName, LastName, Email, Password) " +
-                    $"Values {user.Id},{user.FirstName},{user.LastName}," +
-                    $"{user.EMail},{user.Password}", conn);
+                SqlCommand command = new SqlCommand($"Insert Into dbo.Users (id,FirstName, LastName, Email, Password) " +
+                    $"Values ('{user.Id}','{user.FirstName}','{user.LastName}'," +
+                    $"'{user.EMail}','{user.Password}')", conn);
                 command.Connection.Open();
                 command.ExecuteNonQuery();
             }
