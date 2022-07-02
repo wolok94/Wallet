@@ -1,3 +1,5 @@
+
+
 namespace Portfel
 {
     internal static class Program
@@ -12,6 +14,7 @@ namespace Portfel
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
             Application.Run(new Logowanie());
+            
         }
     }
 }
