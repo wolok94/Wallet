@@ -15,6 +15,8 @@ namespace Portfel.Forms
     public partial class Registration : Form
     {
         private ConnectWithSql sql = new ConnectWithSql();
+        private Wallet wallet;
+        private User user;
         public Registration()
         {
             InitializeComponent();
@@ -31,8 +33,8 @@ namespace Portfel.Forms
             string lastName = lastNameBox.Text;
             string eMail = emailBox.Text;
             string password = passwordBox.Text;
-            User user = new User(firstName, lastName, eMail, password);
-            sql.Connect(user);
+            user = new User(firstName, lastName, eMail, password);
+            sql.Connect(wallet.addUser(user));
             
 
         }

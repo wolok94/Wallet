@@ -11,18 +11,32 @@ namespace Portfel.SQL
     public class ConnectWithSql
     {
         private readonly string connectionString = "Server=LAPTOP-VQRVD89V\\SQLEXPRESS;Database=Wallet;Trusted_Connection=True;";
-
-        public void Connect(User user)
+        private UserDto user;
+        public UserDto Connect(string queryString )
         {
             using (SqlConnection conn = new SqlConnection())
             {
                 conn.ConnectionString = connectionString;
-                SqlCommand command = new SqlCommand($"Insert Into dbo.Users (id,FirstName, LastName, Email, Password) " +
-                    $"Values ('{user.Id}','{user.FirstName}','{user.LastName}'," +
-                    $"'{user.EMail}','{user.Password}')", conn);
+                SqlCommand command = new SqlCommand(queryString, conn);
                 command.Connection.Open();
+                
+                using (SqlDataReader reader = command.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        
+                        string FirstName = reader["FirstName"].ToString();
+                        string LastName = reader["lastName"].ToString();
+                        string EMail = reader["Email"].ToString();
+                        int Id = int.Parse(reader["id"].ToString());
+                        string Password = reader["Password"].ToString();
+                        user = new UserDto(FirstName, LastName, EMail, Password);
+                    }
+                }
                 command.ExecuteNonQuery();
             }
+
+            return user;
         }
     }
 }

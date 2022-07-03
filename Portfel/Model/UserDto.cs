@@ -6,25 +6,21 @@ using System.Threading.Tasks;
 
 namespace Portfel.Model
 {
-    public class User
+    public class UserDto
     {
-        private static int id = 1;
-        public int Id { get; set; }
+
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string EMail { get; set; }
         public string Password { get; set; }
 
-        public User(string firstName, string lastName, string eMail, string password)
+        public UserDto(string firstName, string lastName, string eMail, string password)
         {
             FirstName = firstName;
             LastName = lastName;
             EMail = eMail;
             Password = password;
-            Id = ++id;
+
         }
-
-
-
     }
 }
