@@ -11,25 +11,15 @@ namespace Portfel.Model
 {
     public class Wallet
     {
-        public List<User> Users { get; set; }
-        public UserDto actuallyUser { get; set; }
-        public int MyProperty { get; set; }
-        private ConnectWithSql sql = new ConnectWithSql();
-        private Login login;
+        private List<User> users = new List<User>();
+        
+        public User actuallyUser { get; set; }
 
-        public string addUser(User user)
-        {
-            string queryString = $"Insert Into dbo.Users (id,FirstName, LastName, Email, Password) " +
-                    $"Values ('{user.Id}','{user.FirstName}','{user.LastName}'," +
-                    $"'{user.EMail}','{user.Password}')";
+        public List<User> Users { get => users; set => users = value; }
 
-            return queryString;
-        }
-        public string getUserFromEmailAndPassword(string email, string password)
-        {
-            string queryString = $"Select * From dbo.Users Where Email = '{email}' And Password = '{password}'";
-            return queryString;
-        }
+
+
+
 
     }
 }

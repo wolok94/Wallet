@@ -1,4 +1,5 @@
-﻿using Portfel.Model;
+﻿using Portfel.Forms;
+using Portfel.Model;
 using Portfel.SQL;
 using System;
 using System.Collections.Generic;
@@ -16,7 +17,7 @@ namespace Portfel
     {
         private ConnectWithSql sql = new ConnectWithSql();
         private Wallet wallet = new Wallet();
-        private User user;
+        private MainForm main = new MainForm();
         public Login()
         {
             InitializeComponent();
@@ -34,16 +35,23 @@ namespace Portfel
 
         private void button1_Click(object sender, EventArgs e)
         {
-            
-            UserDto user = sql.Connect(wallet.getUserFromEmailAndPassword(EmailBox.Text, PasswordBox.Text));
+            if (string.IsNullOrEmpty(PasswordBox.Text))
+            {
+                MessageBox.Show("Please enter your password.", "Message", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            PasswordBox.Text = Encrypter.Encrypt(PasswordBox.Text);
+            User user = sql.Login(EmailBox.Text, PasswordBox.Text);
             if (user is null)
             {
                 label3.Visible = true;
-                label3.Text = "Incorrect email or message";
+                label3.Text = "Incorrect email or password";
             }
             else
             {
                 wallet.actuallyUser = user;
+                this.Hide();
+                main.ShowDialog();
             }
 
         }
@@ -51,6 +59,7 @@ namespace Portfel
         private void textBox2_TextChanged(object sender, EventArgs e)
         {
 
+            PasswordBox.PasswordChar = '*';
         }
     }
 }

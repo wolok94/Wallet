@@ -8,12 +8,15 @@ namespace Portfel.Model
 {
     public class User
     {
-        private static int id = 1;
+        public static int id = 1;
         public int Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string EMail { get; set; }
         public string Password { get; set; }
+        public int ExpenseId { get; set; }
+        public virtual List<Expense> Expenses { get; set; }
+
 
         public User(string firstName, string lastName, string eMail, string password)
         {
@@ -21,7 +24,11 @@ namespace Portfel.Model
             LastName = lastName;
             EMail = eMail;
             Password = password;
-            Id = ++id;
+            Id = id++;
+        }
+        public User()
+        {
+
         }
 
 

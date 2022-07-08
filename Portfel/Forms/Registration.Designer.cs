@@ -107,6 +107,7 @@
             this.passwordBox.Name = "passwordBox";
             this.passwordBox.Size = new System.Drawing.Size(142, 23);
             this.passwordBox.TabIndex = 7;
+            this.passwordBox.TextChanged += new System.EventHandler(this.passwordBox_TextChanged);
             // 
             // signUpButton
             // 
