@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Portfel.Exceptions
 {
-    public class PasswordNotFoundException : Exception
+    public class ValueNotFoundException : Exception
     {
-        public PasswordNotFoundException() : base()
+        public ValueNotFoundException() : base()
         {
 
         }

@@ -31,6 +31,7 @@ namespace Portfel.Forms
 
         private void button1_Click(object sender, EventArgs e)
         {
+            Login login = new Login();
             if (string.IsNullOrEmpty(passwordBox.Text))
             {
                 MessageBox.Show("Please enter your password.", "Message", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -43,6 +44,8 @@ namespace Portfel.Forms
             string password = passwordBox.Text;
             user = new User(firstName, lastName, eMail, password);
             sql.Registration(user);
+            this.Hide();
+            login.ShowDialog();
 
         }
 

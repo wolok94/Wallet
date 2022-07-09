@@ -13,7 +13,7 @@ namespace Portfel.Model
     {
         private List<User> users = new List<User>();
         
-        public User actuallyUser { get; set; }
+        public static User actuallyUser { get; set; }
 
         public List<User> Users { get => users; set => users = value; }
 

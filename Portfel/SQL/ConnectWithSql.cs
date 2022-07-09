@@ -8,26 +8,26 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Portfel.SQL
+{
+    public class ConnectWithSql
     {
-        public class ConnectWithSql 
+        private readonly string connectionString = "Server=LAPTOP-VQRVD89V\\SQLEXPRESS;Database=Wallet;Trusted_Connection=True;";
+        private User actuallyUser;
+        public void Registration(User user)
         {
-            private readonly string connectionString = "Server=LAPTOP-VQRVD89V\\SQLEXPRESS;Database=Wallet;Trusted_Connection=True;";
-            private User actuallyUser;
-            public void Registration(User user)
+            using (SqlConnection conn = new SqlConnection())
             {
-                using (SqlConnection conn = new SqlConnection())
-                {
-                    conn.ConnectionString = connectionString;
-                    SqlCommand command = new SqlCommand($"Insert Into [User] (UserId,FirstName, LastName, Email, Password) " +
-                    $"Values ('{user.Id}','{user.FirstName}','{user.LastName}'," +
-                    $"'{user.EMail}','{user.Password}')", conn);
-                    command.Connection.Open();
+                conn.ConnectionString = connectionString;
+                SqlCommand command = new SqlCommand($"Insert Into [User] (UserId,FirstName, LastName, Email, Password) " +
+                $"Values ('{user.Id}','{user.FirstName}','{user.LastName}'," +
+                $"'{user.EMail}','{user.Password}')", conn);
+                command.Connection.Open();
 
-                    command.ExecuteNonQuery();
-                }
-
-                
+                command.ExecuteNonQuery();
             }
+
+
+        }
         public User Login(string email, string password)
         {
             using (SqlConnection conn = new SqlConnection())
@@ -68,7 +68,7 @@ namespace Portfel.SQL
 
                 using (SqlDataReader reader = command.ExecuteReader())
                 {
-                    if (reader.Read())
+                    while (reader.Read())
                     {
 
                         string FirstName = reader["FirstName"].ToString();
@@ -106,12 +106,50 @@ namespace Portfel.SQL
                 }
                 command.ExecuteNonQuery();
             }
-            throw new PasswordNotFoundException();
+            throw new ValueNotFoundException();
 
-            
+
         }
+        public void update(User user, Income income)
+        {
+            using (SqlConnection conn = new SqlConnection())
+            {
+                conn.ConnectionString = connectionString;
+                SqlCommand command = new SqlCommand($"Insert into [Income] (IncomeId, Value, Date)" +
+                    $"Values ('{income.Id}', '{income.Value}', '{income.Date}')  "
+                    , conn);
+
+                command.Connection.Open();
+                command.ExecuteNonQuery();
+                command = new SqlCommand($"Update [User] set IncomeId = {income.Id} Where Email = '{user.EMail}'", conn);
+
+                command.ExecuteNonQuery();
+            }
+        }
+        public int getHigherIncomeId()
+        {
+            using (SqlConnection conn = new SqlConnection())
+            {
+                conn.ConnectionString = connectionString;
+                SqlCommand command = new SqlCommand($"Select MAX(IncomeId) from [Income]"
+                    , conn);
+                command.Connection.Open();
+
+                using (SqlDataReader reader = command.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        int id = reader.GetInt32(0);
+                        return id;
+                    }
+                    command.ExecuteNonQuery();
+                }
+
+                throw new ValueNotFoundException();
+            }
 
         }
     }
+}
 
 

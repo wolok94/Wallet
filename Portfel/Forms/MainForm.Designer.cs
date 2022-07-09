@@ -30,7 +30,7 @@
         {
             this.WelcomeLabel = new System.Windows.Forms.Label();
             this.monthCalendar1 = new System.Windows.Forms.MonthCalendar();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.profitBox = new System.Windows.Forms.TextBox();
             this.ProfitButton = new System.Windows.Forms.Button();
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
@@ -54,13 +54,14 @@
             this.monthCalendar1.Location = new System.Drawing.Point(574, 290);
             this.monthCalendar1.Name = "monthCalendar1";
             this.monthCalendar1.TabIndex = 1;
+            this.monthCalendar1.DateChanged += new System.Windows.Forms.DateRangeEventHandler(this.monthCalendar1_DateChanged);
             // 
-            // textBox1
+            // profitBox
             // 
-            this.textBox1.Location = new System.Drawing.Point(36, 108);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(100, 23);
-            this.textBox1.TabIndex = 2;
+            this.profitBox.Location = new System.Drawing.Point(36, 108);
+            this.profitBox.Name = "profitBox";
+            this.profitBox.Size = new System.Drawing.Size(100, 23);
+            this.profitBox.TabIndex = 2;
             // 
             // ProfitButton
             // 
@@ -70,6 +71,7 @@
             this.ProfitButton.TabIndex = 3;
             this.ProfitButton.Text = "Dodaj dochód";
             this.ProfitButton.UseVisualStyleBackColor = true;
+            this.ProfitButton.Click += new System.EventHandler(this.ProfitButton_Click);
             // 
             // textBox2
             // 
@@ -120,7 +122,7 @@
             this.Controls.Add(this.comboBox1);
             this.Controls.Add(this.textBox2);
             this.Controls.Add(this.ProfitButton);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.profitBox);
             this.Controls.Add(this.monthCalendar1);
             this.Controls.Add(this.WelcomeLabel);
             this.Name = "MainForm";
@@ -134,7 +136,7 @@
 
         private Label WelcomeLabel;
         private MonthCalendar monthCalendar1;
-        private TextBox textBox1;
+        private TextBox profitBox;
         private Button ProfitButton;
         private TextBox textBox2;
         private ComboBox comboBox1;

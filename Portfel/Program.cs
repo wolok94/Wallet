@@ -18,9 +18,8 @@ namespace Portfel
             // see https://aka.ms/applicationconfiguration.
             ConnectWithSql sql = new ConnectWithSql();
             Wallet wallet = new Wallet();
-            User user;
             wallet.Users = sql.getAll();
-
+            Income.id = sql.getHigherIncomeId();
                 ApplicationConfiguration.Initialize();
                 Application.Run(new Logowanie());
 

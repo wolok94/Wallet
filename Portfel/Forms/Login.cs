@@ -49,7 +49,7 @@ namespace Portfel
             }
             else
             {
-                wallet.actuallyUser = user;
+                Wallet.actuallyUser = user;
                 this.Hide();
                 main.ShowDialog();
             }
