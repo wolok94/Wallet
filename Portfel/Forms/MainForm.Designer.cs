@@ -42,11 +42,11 @@
             // 
             this.WelcomeLabel.AutoSize = true;
             this.WelcomeLabel.Font = new System.Drawing.Font("Segoe UI", 25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.WelcomeLabel.Location = new System.Drawing.Point(334, 39);
+            this.WelcomeLabel.Location = new System.Drawing.Point(214, 28);
             this.WelcomeLabel.Name = "WelcomeLabel";
-            this.WelcomeLabel.Size = new System.Drawing.Size(109, 46);
+            this.WelcomeLabel.Size = new System.Drawing.Size(419, 46);
             this.WelcomeLabel.TabIndex = 0;
-            this.WelcomeLabel.Text = "label1";
+            this.WelcomeLabel.Text = "Witaj w aplikacji Portfel 1.0";
             this.WelcomeLabel.Click += new System.EventHandler(this.label1_Click);
             // 
             // monthCalendar1
@@ -127,6 +127,7 @@
             this.Controls.Add(this.WelcomeLabel);
             this.Name = "MainForm";
             this.Text = "MainForm";
+            this.Load += new System.EventHandler(this.MainForm_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

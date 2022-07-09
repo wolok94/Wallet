@@ -3,6 +3,7 @@ using Portfel.Model;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.Data.SqlTypes;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -47,7 +48,7 @@ namespace Portfel.SQL
                         string EMail = reader["Email"].ToString();
                         int Id = int.Parse(reader["UserId"].ToString());
                         string Password = reader["Password"].ToString();
-                        actuallyUser = new User(FirstName, LastName, EMail, Password);
+                        actuallyUser = new User(FirstName, LastName, EMail, Password, Id);
                     }
                 }
                 command.ExecuteNonQuery();
@@ -76,7 +77,8 @@ namespace Portfel.SQL
                         string EMail = reader["Email"].ToString();
                         int Id = int.Parse(reader["UserId"].ToString());
                         string Password = reader["Password"].ToString();
-                        user = new User(FirstName, LastName, EMail, Password);
+                        User.id = Id;
+                        user = new User(FirstName, LastName, EMail, Password, Id);
                         users.Add(user);
                     }
                 }
@@ -115,15 +117,13 @@ namespace Portfel.SQL
             using (SqlConnection conn = new SqlConnection())
             {
                 conn.ConnectionString = connectionString;
-                SqlCommand command = new SqlCommand($"Insert into [Income] (IncomeId, Value, Date)" +
-                    $"Values ('{income.Id}', '{income.Value}', '{income.Date}')  "
+                SqlCommand command = new SqlCommand($"Insert into [Income] (IncomeId, Value, Date, UserId)" +
+                    $"Values ('{income.Id}', '{income.Value}', '{income.Date}', '{user.Id}')  "
                     , conn);
 
                 command.Connection.Open();
                 command.ExecuteNonQuery();
-                command = new SqlCommand($"Update [User] set IncomeId = {income.Id} Where Email = '{user.EMail}'", conn);
 
-                command.ExecuteNonQuery();
             }
         }
         public int getHigherIncomeId()
@@ -139,15 +139,48 @@ namespace Portfel.SQL
                 {
                     if (reader.Read())
                     {
-                        int id = reader.GetInt32(0);
-                        return id;
+                        try
+                        {
+                            int id = reader.GetInt32(0);
+                            return id;
+                            command.ExecuteNonQuery();
+                        }
+                        catch(SqlNullValueException e)
+                        {
+
+                        }
+                        
                     }
-                    command.ExecuteNonQuery();
+                    
                 }
 
-                throw new ValueNotFoundException();
+                return 0;
             }
 
+
+        }
+        public double getIncome(User user)
+        {
+            double value = 0;
+            using (SqlConnection conn = new SqlConnection())
+            {
+                conn.ConnectionString = connectionString;
+                SqlCommand command = new SqlCommand($"Select Value From [Income] Where UserId = '{user.Id}'  "
+                    , conn);
+                command.Connection.Open();
+                using (SqlDataReader reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        
+                        value += double.Parse(reader["Value"].ToString());
+                    }
+                }
+
+
+                command.ExecuteNonQuery();
+                return value;
+            }
         }
     }
 }

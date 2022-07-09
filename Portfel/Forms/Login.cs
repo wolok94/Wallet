@@ -52,6 +52,7 @@ namespace Portfel
                 Wallet.actuallyUser = user;
                 this.Hide();
                 main.ShowDialog();
+                
             }
 
         }

@@ -19,11 +19,12 @@ namespace Portfel.Forms
         public MainForm()
         {
             InitializeComponent();
+            
         }
 
         private void label1_Click(object sender, EventArgs e)
         {
-
+            
         }
 
         private void ProfitButton_Click(object sender, EventArgs e)
@@ -33,12 +34,24 @@ namespace Portfel.Forms
             date = monthCalendar1.SelectionRange.Start;
             income = new Income(value, date);
             sql.update(Wallet.actuallyUser, income);
+            settingValuesOfIncome();
 
         }
 
         private void monthCalendar1_DateChanged(object sender, DateRangeEventArgs e)
         {
 
+        }
+
+        private void MainForm_Load(object sender, EventArgs e)
+        {
+            settingValuesOfIncome();
+            
+            
+        }
+        private void settingValuesOfIncome()
+        {
+            label1.Text = "Na twoim koncie pozostało: " + sql.getIncome(Wallet.actuallyUser).ToString();
         }
     }
 }

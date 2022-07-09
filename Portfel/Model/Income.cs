@@ -8,7 +8,7 @@ namespace Portfel.Model
 {
     public class Income
     {
-        public static int id = 1;
+        public static int id = 0;
         public int Id { get; set; }
         public double Value { get; set; }
         public DateTime Date { get; set; }

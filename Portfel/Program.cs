@@ -1,5 +1,6 @@
 
 
+using Portfel.Exceptions;
 using Portfel.Model;
 using Portfel.SQL;
 using System.Data.SqlClient;
@@ -19,7 +20,9 @@ namespace Portfel
             ConnectWithSql sql = new ConnectWithSql();
             Wallet wallet = new Wallet();
             wallet.Users = sql.getAll();
-            Income.id = sql.getHigherIncomeId();
+
+                Income.id = sql.getHigherIncomeId();
+
                 ApplicationConfiguration.Initialize();
                 Application.Run(new Logowanie());
 

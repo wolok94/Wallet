@@ -10,9 +10,9 @@ namespace Portfel.Model
     {
         public int Id { get; set; }
         public double Value { get; set; }
-        public int ProductId { get; set; }
+        public int ProductName { get; set; }
         public DateTime date { get; set; }
         public virtual User user { get; set; }
-        public virtual Product product { get; set; }
+ 
     }
 }
