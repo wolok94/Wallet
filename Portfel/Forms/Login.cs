@@ -53,6 +53,7 @@ namespace Portfel
                 this.Hide();
                 main.ShowDialog();
                 
+                
             }
 
         }

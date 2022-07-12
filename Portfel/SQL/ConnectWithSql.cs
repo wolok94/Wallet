@@ -2,6 +2,7 @@
 using Portfel.Model;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Data.SqlTypes;
 using System.Linq;
@@ -112,7 +113,7 @@ namespace Portfel.SQL
 
 
         }
-        public void update(User user, Income income)
+        public void addIncome(User user, Income income)
         {
             using (SqlConnection conn = new SqlConnection())
             {
@@ -145,13 +146,13 @@ namespace Portfel.SQL
                             return id;
                             command.ExecuteNonQuery();
                         }
-                        catch(SqlNullValueException e)
+                        catch (SqlNullValueException e)
                         {
 
                         }
-                        
+
                     }
-                    
+
                 }
 
                 return 0;
@@ -165,14 +166,72 @@ namespace Portfel.SQL
             using (SqlConnection conn = new SqlConnection())
             {
                 conn.ConnectionString = connectionString;
-                SqlCommand command = new SqlCommand($"Select Value From [Income] Where UserId = '{user.Id}'  "
+                SqlCommand command = new SqlCommand($"Select Value From [Income] Where UserId = '{user.Id}' And IncomeId = '{getHigherIncomeId()} "
+                    , conn);
+                command.Connection.Open();
+                try
+                {
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+
+                            value += double.Parse(reader["Value"].ToString());
+                        }
+                    }
+
+                    command.ExecuteNonQuery();
+                }
+                catch (SqlException e)
+                {
+
+                }
+
+                return value;
+            }
+        }
+        public void addExpense(User user, Expense expense)
+        {
+            using (SqlConnection conn = new SqlConnection())
+            {
+                conn.ConnectionString = connectionString;
+                SqlCommand command = new SqlCommand($"Insert into [Expense] (ExpenseId, Value, UserId, ProductName, Date)" +
+                    $"Values ('{expense.Id}', '{expense.Value}', '{user.Id}', '{expense.ProductName}', '{expense.Date}')  "
+                    , conn);
+
+                command.Connection.Open();
+                command.ExecuteNonQuery();
+
+            }
+        }
+        public void addBalance(User user, Balance balance)
+        {
+            using (SqlConnection conn = new SqlConnection())
+            {
+                conn.ConnectionString = connectionString;
+                SqlCommand command = new SqlCommand($"Insert into [Balance] (BalanceId, Value, UserId)" +
+                    $"Values ('{balance.Id}', '{balance.Value}', '{user.Id}')  "
+                    , conn);
+
+                command.Connection.Open();
+                command.ExecuteNonQuery();
+
+            }
+        }
+        public double getBalance(User user)
+        {
+            double value = 0;
+            using (SqlConnection conn = new SqlConnection())
+            {
+                conn.ConnectionString = connectionString;
+                SqlCommand command = new SqlCommand($"Select Value From [Balance] Where UserId = '{user.Id}' And BalanceId = '{getHigherBalanceId()}'   "
                     , conn);
                 command.Connection.Open();
                 using (SqlDataReader reader = command.ExecuteReader())
                 {
-                    while (reader.Read())
+                    if (reader.Read())
                     {
-                        
+
                         value += double.Parse(reader["Value"].ToString());
                     }
                 }
@@ -182,7 +241,106 @@ namespace Portfel.SQL
                 return value;
             }
         }
+        public int getHigherExpenseId()
+        {
+            using (SqlConnection conn = new SqlConnection())
+            {
+                conn.ConnectionString = connectionString;
+                SqlCommand command = new SqlCommand($"Select MAX(ExpenseId) from [Expense]"
+                    , conn);
+                command.Connection.Open();
+
+                using (SqlDataReader reader = command.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        try
+                        {
+                            int id = reader.GetInt32(0);
+                            return id;
+                            command.ExecuteNonQuery();
+                        }
+                        catch (SqlNullValueException e)
+                        {
+
+                        }
+
+                    }
+
+                }
+
+                return 0;
+            }
+        }
+        public int getHigherBalanceId()
+        {
+            using (SqlConnection conn = new SqlConnection())
+            {
+                conn.ConnectionString = connectionString;
+                SqlCommand command = new SqlCommand($"Select MAX(BalanceId) from [Balance]"
+                    , conn);
+                command.Connection.Open();
+
+                using (SqlDataReader reader = command.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        try
+                        {
+                            int id = reader.GetInt32(0);
+                            return id;
+                            command.ExecuteNonQuery();
+                        }
+                        catch (SqlNullValueException e)
+                        {
+
+                        }
+
+                    }
+
+                }
+
+                return 0;
+            }
+        }
+        public DataTable getExpenses(User user)
+        {
+            DataTable dtbl = new DataTable();
+            using (SqlConnection conn = new SqlConnection())
+            {
+
+                conn.ConnectionString = connectionString;
+                conn.Open();
+                SqlDataAdapter command = new SqlDataAdapter($"Select * From [Expense] Where UserId = '{Wallet.actuallyUser.Id}'    "
+                    , conn);
+
+                
+                command.Fill(dtbl);
+                
+
+
+            }
+            return dtbl;
+        }
+        public DataTable getIncomes(User user)
+        {
+            DataTable dtbl = new DataTable();
+            using (SqlConnection conn = new SqlConnection())
+            {
+
+                conn.ConnectionString = connectionString;
+                conn.Open();
+                SqlDataAdapter command = new SqlDataAdapter($"Select * From [Income] Where UserId = '{Wallet.actuallyUser.Id}'    "
+                    , conn);
+
+
+                command.Fill(dtbl);
+
+
+
+            }
+            return dtbl;
+        }
     }
 }
-
 

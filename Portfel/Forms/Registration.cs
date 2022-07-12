@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using Portfel.Model;
 using Portfel.SQL;
 using System.Security.Cryptography;
+using Portfel.SendEmail;
 
 namespace Portfel.Forms
 {
@@ -44,6 +45,16 @@ namespace Portfel.Forms
             string password = passwordBox.Text;
             user = new User(firstName, lastName, eMail, password);
             sql.Registration(user);
+            var email = new Send(new EmailParams
+            {
+                HostSmtp = "smtp.gmail.com",
+                Port = 587,
+                EnableSsl = true,
+                SenderName = "Kamil Wolak",
+                SenderEmail = "thewolok@gmail.com",
+                SenderEmailPassword = "zvksayjiyzglsdxw"
+            });
+            email.SendEmail(eMail, firstName, "Rejestracja", "Testowy email");
             this.Hide();
             login.ShowDialog();
 

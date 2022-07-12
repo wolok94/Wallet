@@ -59,3 +59,5 @@ E:\Programowanie\Ćwiczenia\Portfel\Portfel\bin\Debug\net6.0-windows\runtimes\wi
 E:\Programowanie\Ćwiczenia\Portfel\Portfel\bin\Debug\net6.0-windows\runtimes\win-x64\native\Microsoft.Data.SqlClient.SNI.dll
 E:\Programowanie\Ćwiczenia\Portfel\Portfel\bin\Debug\net6.0-windows\runtimes\win-x86\native\Microsoft.Data.SqlClient.SNI.dll
 E:\Programowanie\Ćwiczenia\Portfel\Portfel\bin\Debug\net6.0-windows\runtimes\win\lib\netstandard2.0\System.Runtime.Caching.dll
+E:\Programowanie\Ćwiczenia\Portfel\Portfel\bin\Debug\net6.0-windows\FluentEmail.Core.dll
+E:\Programowanie\Ćwiczenia\Portfel\Portfel\bin\Debug\net6.0-windows\FluentEmail.Smtp.dll

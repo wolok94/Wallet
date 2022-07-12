@@ -22,6 +22,8 @@ namespace Portfel
             wallet.Users = sql.getAll();
 
                 Income.id = sql.getHigherIncomeId();
+                Expense.id = sql.getHigherExpenseId();
+                Balance.id = sql.getHigherBalanceId();
 
                 ApplicationConfiguration.Initialize();
                 Application.Run(new Logowanie());
