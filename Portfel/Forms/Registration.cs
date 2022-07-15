@@ -11,14 +11,16 @@ using Portfel.Model;
 using Portfel.SQL;
 using System.Security.Cryptography;
 using Portfel.SendEmail;
+using Portfel.IO;
 
 namespace Portfel.Forms
 {
     public partial class Registration : Form
     {
         private ConnectWithSql sql = new ConnectWithSql();
-        private Wallet wallet = new Wallet();
         private User user;
+        private Login login = new Login();
+        private string decryptedPassword;
         public Registration()
         {
             InitializeComponent();
@@ -32,12 +34,13 @@ namespace Portfel.Forms
 
         private void button1_Click(object sender, EventArgs e)
         {
-            Login login = new Login();
+            
             if (string.IsNullOrEmpty(passwordBox.Text))
             {
                 MessageBox.Show("Please enter your password.", "Message", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
+            decryptedPassword = passwordBox.Text;
             passwordBox.Text = Encrypter.Encrypt(passwordBox.Text);
             string firstName = firstNameBox.Text;
             string lastName = lastNameBox.Text;
@@ -45,16 +48,9 @@ namespace Portfel.Forms
             string password = passwordBox.Text;
             user = new User(firstName, lastName, eMail, password);
             sql.Registration(user);
-            var email = new Send(new EmailParams
-            {
-                HostSmtp = "smtp.gmail.com",
-                Port = 587,
-                EnableSsl = true,
-                SenderName = "Kamil Wolak",
-                SenderEmail = "thewolok@gmail.com",
-                SenderEmailPassword = "zvksayjiyzglsdxw"
-            });
-            email.SendEmail(eMail, firstName, "Rejestracja", "Testowy email");
+
+            sendEmail(eMail, firstName);
+            
             this.Hide();
             login.ShowDialog();
 
@@ -65,5 +61,20 @@ namespace Portfel.Forms
 
             passwordBox.PasswordChar = '*';
         }
+        private void sendEmail(string eMail, string firstName)
+        {
+            var email = new Send(new EmailParams
+            {
+                HostSmtp = "smtp.gmail.com",
+                Port = 587,
+                EnableSsl = true,
+                SenderName = "Kamil Wolak",
+                SenderEmail = "thewolok@gmail.com",
+                SenderEmailPassword = "zvksayjiyzglsdxw"
+            });
+            FileManager file = new FileManager();
+            email.SendEmail(eMail, firstName, "Rejestracja", file.ReadFile(), decryptedPassword);
+        }
+       
     }
 }

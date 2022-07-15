@@ -61,3 +61,13 @@ E:\Programowanie\Ćwiczenia\Portfel\Portfel\bin\Debug\net6.0-windows\runtimes\wi
 E:\Programowanie\Ćwiczenia\Portfel\Portfel\bin\Debug\net6.0-windows\runtimes\win\lib\netstandard2.0\System.Runtime.Caching.dll
 E:\Programowanie\Ćwiczenia\Portfel\Portfel\bin\Debug\net6.0-windows\FluentEmail.Core.dll
 E:\Programowanie\Ćwiczenia\Portfel\Portfel\bin\Debug\net6.0-windows\FluentEmail.Smtp.dll
+E:\Programowanie\Ćwiczenia\Portfel\Portfel\bin\Debug\net6.0-windows\EPPlus.dll
+E:\Programowanie\Ćwiczenia\Portfel\Portfel\bin\Debug\net6.0-windows\EPPlus.Interfaces.dll
+E:\Programowanie\Ćwiczenia\Portfel\Portfel\bin\Debug\net6.0-windows\EPPlus.System.Drawing.dll
+E:\Programowanie\Ćwiczenia\Portfel\Portfel\bin\Debug\net6.0-windows\Microsoft.Extensions.Configuration.dll
+E:\Programowanie\Ćwiczenia\Portfel\Portfel\bin\Debug\net6.0-windows\Microsoft.Extensions.Configuration.FileExtensions.dll
+E:\Programowanie\Ćwiczenia\Portfel\Portfel\bin\Debug\net6.0-windows\Microsoft.Extensions.Configuration.Json.dll
+E:\Programowanie\Ćwiczenia\Portfel\Portfel\bin\Debug\net6.0-windows\Microsoft.Extensions.FileProviders.Abstractions.dll
+E:\Programowanie\Ćwiczenia\Portfel\Portfel\bin\Debug\net6.0-windows\Microsoft.Extensions.FileProviders.Physical.dll
+E:\Programowanie\Ćwiczenia\Portfel\Portfel\bin\Debug\net6.0-windows\Microsoft.Extensions.FileSystemGlobbing.dll
+E:\Programowanie\Ćwiczenia\Portfel\Portfel\bin\Debug\net6.0-windows\Microsoft.IO.RecyclableMemoryStream.dll

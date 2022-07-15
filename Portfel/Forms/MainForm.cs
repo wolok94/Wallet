@@ -1,4 +1,5 @@
-﻿using Portfel.Model;
+﻿using Portfel.IO;
+using Portfel.Model;
 using Portfel.SQL;
 using System;
 using System.Collections.Generic;
@@ -135,6 +136,12 @@ namespace Portfel.Forms
         private void dgv_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
 
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            GenerateExcelChart gen = new GenerateExcelChart();
+            gen.Generate();
         }
     }
 }

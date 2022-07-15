@@ -39,14 +39,16 @@
             this.displayExpense = new System.Windows.Forms.Button();
             this.displayIncome = new System.Windows.Forms.Button();
             this.dgv = new System.Windows.Forms.DataGridView();
-            this.dgv2 = new System.Windows.Forms.DataGridView();
             this.Id = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Value = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Date = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ProductName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dgv2 = new System.Windows.Forms.DataGridView();
             this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.sqlCommand1 = new Microsoft.Data.SqlClient.SqlCommand();
+            this.raportButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgv)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgv2)).BeginInit();
             this.SuspendLayout();
@@ -161,20 +163,6 @@
             this.dgv.TabIndex = 11;
             this.dgv.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgv_CellContentClick);
             // 
-            // dgv2
-            // 
-            this.dgv2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgv2.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.dataGridViewTextBoxColumn1,
-            this.dataGridViewTextBoxColumn2,
-            this.dataGridViewTextBoxColumn3});
-            this.dgv2.Location = new System.Drawing.Point(12, 253);
-            this.dgv2.Name = "dgv2";
-            this.dgv2.RowTemplate.Height = 25;
-            this.dgv2.Size = new System.Drawing.Size(342, 132);
-            this.dgv2.TabIndex = 12;
-            this.dgv2.Visible = false;
-            // 
             // Id
             // 
             this.Id.DataPropertyName = "ExpenseId";
@@ -199,6 +187,20 @@
             this.ProductName.HeaderText = "Produkt";
             this.ProductName.Name = "ProductName";
             // 
+            // dgv2
+            // 
+            this.dgv2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgv2.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.dataGridViewTextBoxColumn1,
+            this.dataGridViewTextBoxColumn2,
+            this.dataGridViewTextBoxColumn3});
+            this.dgv2.Location = new System.Drawing.Point(12, 253);
+            this.dgv2.Name = "dgv2";
+            this.dgv2.RowTemplate.Height = 25;
+            this.dgv2.Size = new System.Drawing.Size(342, 132);
+            this.dgv2.TabIndex = 12;
+            this.dgv2.Visible = false;
+            // 
             // dataGridViewTextBoxColumn1
             // 
             this.dataGridViewTextBoxColumn1.DataPropertyName = "IncomeId";
@@ -217,11 +219,30 @@
             this.dataGridViewTextBoxColumn3.HeaderText = "Data";
             this.dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
             // 
+            // sqlCommand1
+            // 
+            this.sqlCommand1.CommandTimeout = 30;
+            this.sqlCommand1.Connection = null;
+            this.sqlCommand1.Notification = null;
+            this.sqlCommand1.Transaction = null;
+            // 
+            // raportButton
+            // 
+            this.raportButton.Location = new System.Drawing.Point(605, 232);
+            this.raportButton.Name = "raportButton";
+            this.raportButton.Size = new System.Drawing.Size(160, 32);
+            this.raportButton.TabIndex = 13;
+            this.raportButton.Text = "Generuj raport";
+            this.raportButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.raportButton.UseVisualStyleBackColor = true;
+            this.raportButton.Click += new System.EventHandler(this.button1_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.raportButton);
             this.Controls.Add(this.dgv2);
             this.Controls.Add(this.dgv);
             this.Controls.Add(this.displayIncome);
@@ -265,5 +286,7 @@
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
+        private Microsoft.Data.SqlClient.SqlCommand sqlCommand1;
+        private Button raportButton;
     }
 }

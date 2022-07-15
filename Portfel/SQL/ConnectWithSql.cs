@@ -341,6 +341,29 @@ namespace Portfel.SQL
             }
             return dtbl;
         }
+        public double getExpenseByProductName(User user, string productName)
+        {
+            double value = 0;
+            using (SqlConnection conn = new SqlConnection())
+            {
+                conn.ConnectionString = connectionString;
+                SqlCommand command = new SqlCommand($"Select Value From [Expense] Where UserId = '{user.Id}' And ProductName = '{productName}'   "
+                    , conn);
+                command.Connection.Open();
+                using (SqlDataReader reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+
+                        value += double.Parse(reader["Value"].ToString());
+                    }
+                }
+
+
+                command.ExecuteNonQuery();
+                return value;
+            }
+        }
     }
 }
 

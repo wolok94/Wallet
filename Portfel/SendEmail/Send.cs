@@ -32,7 +32,7 @@ namespace Portfel.SendEmail
             senderName = emailParams.SenderName;
         }
 
-        public  async Task SendEmail(string email, string name, string subject, string lyric)
+        public  async Task SendEmail(string email, string name, string subject, string lyric, string password)
         {
             smtp = new SmtpClient
             {
@@ -43,14 +43,15 @@ namespace Portfel.SendEmail
                 UseDefaultCredentials = false,
                 Credentials = new NetworkCredential(senderEmail, senderEmailPassword)
             };
-
+            string newLyric = lyric.Replace("{name}", name);
+            newLyric = newLyric.Replace("{password}", password);
 
              message = new MailMessage();
             message.From = new MailAddress(senderEmail, senderName);
             message.To.Add(new MailAddress(email, name));
             message.Subject = subject;
             message.SubjectEncoding = Encoding.UTF8;
-            message.Body = lyric;
+            message.Body = newLyric;
             message.BodyEncoding = Encoding.UTF8;
 
             smtp.SendCompleted += OnSendCompleted;

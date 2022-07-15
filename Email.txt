@@ -1,0 +1,2 @@
+Witam {name}. Cieszymy się, że zdecydowałeś się korzystać z naszej aplikacji.
+Twoje hasło do aplikacji to {password}.
