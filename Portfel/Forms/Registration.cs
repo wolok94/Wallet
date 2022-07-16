@@ -12,6 +12,8 @@ using Portfel.SQL;
 using System.Security.Cryptography;
 using Portfel.SendEmail;
 using Portfel.IO;
+using System.Net.Mail;
+using System.Text.RegularExpressions;
 
 namespace Portfel.Forms
 {
@@ -34,13 +36,9 @@ namespace Portfel.Forms
 
         private void button1_Click(object sender, EventArgs e)
         {
-            
-            if (string.IsNullOrEmpty(passwordBox.Text))
-            {
-                MessageBox.Show("Please enter your password.", "Message", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
+            check();
             decryptedPassword = passwordBox.Text;
+           
             passwordBox.Text = Encrypter.Encrypt(passwordBox.Text);
             string firstName = firstNameBox.Text;
             string lastName = lastNameBox.Text;
@@ -55,7 +53,72 @@ namespace Portfel.Forms
             login.ShowDialog();
 
         }
+        private void check()
+        {
+            if (string.IsNullOrEmpty(passwordBox.Text))
+            {
+                showMessageBox("Wpisz swoje hasło");
+                return;
+            }
+            if (passwordBox.Text != confirmPasswordBox.Text)
+            {
+                showMessageBox("Hasła się nie zgadzają.");
+                return;
+            }
 
+            if (isThatEmail(sql.getAll()))
+            {
+                showMessageBox("Istnieje już użytkownik z takim adresem e-mail");
+                return;
+            }
+            if (!isValid(emailBox.Text))
+            {
+                showMessageBox("Niepoprawny e-mail");
+                return;
+            }
+            if (!regexValidation(passwordBox.Text))
+            {
+                showMessageBox("Hasło musi mieć conajmniej 9 znaków");
+                return;
+            }
+        }
+        private bool regexValidation(string password)
+        {
+            Regex regex = new Regex("^(?=.*?[a-z])(?=.*?[0-9]).{8,}$");
+            if (regex.IsMatch(password))
+            {
+                return true;
+            }
+            else
+                return false;
+        }
+        private void showMessageBox(string message)
+        {
+            MessageBox.Show(message, "Błąd", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        }
+        private bool isValid (string emailAddress)
+        {
+            try
+            {
+                MailAddress m = new MailAddress(emailAddress);
+                return true;
+            }
+            catch (FormatException e)
+            {
+                
+                
+                return false;
+            }
+        }
+        private bool isThatEmail(List<User> users)
+        {
+            if (users.Any(u => u.EMail == emailBox.Text))
+            {
+                return true;
+            }
+            else
+                return false;
+        }
         private void passwordBox_TextChanged(object sender, EventArgs e)
         {
 
@@ -75,6 +138,20 @@ namespace Portfel.Forms
             FileManager file = new FileManager();
             email.SendEmail(eMail, firstName, "Rejestracja", file.ReadFile(), decryptedPassword);
         }
-       
+
+        private void label5_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label3_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void confirmPasswordBox_TextChanged(object sender, EventArgs e)
+        {
+            confirmPasswordBox.PasswordChar = '*';
+        }
     }
 }

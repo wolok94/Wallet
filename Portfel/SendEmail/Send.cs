@@ -59,6 +59,33 @@ namespace Portfel.SendEmail
 
 
         }
+        public async Task SendEmail(string email, string name, string subject, string lyric)
+        {
+            smtp = new SmtpClient
+            {
+                Host = hostSmtp,
+                EnableSsl = enableSsl,
+                Port = port,
+                DeliveryMethod = SmtpDeliveryMethod.Network,
+                UseDefaultCredentials = false,
+                Credentials = new NetworkCredential(senderEmail, senderEmailPassword)
+            };
+            string newLyric = lyric.Replace("{name}", name);
+
+
+            message = new MailMessage();
+            message.From = new MailAddress(senderEmail, senderName);
+            message.To.Add(new MailAddress(email, name));
+            message.Subject = subject;
+            message.SubjectEncoding = Encoding.UTF8;
+            message.Body = newLyric;
+            message.BodyEncoding = Encoding.UTF8;
+
+            smtp.SendCompleted += OnSendCompleted;
+            smtp.SendMailAsync(message);
+
+
+        }
 
         private void OnSendCompleted(object sender, AsyncCompletedEventArgs e)
         {

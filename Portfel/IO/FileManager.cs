@@ -10,7 +10,12 @@ namespace Portfel.IO
     {
         public string ReadFile()
         {
-            string text = File.ReadAllText(@"E:\Programowanie\Ćwiczenia\Portfel\Email.txt");
+            string text = File.ReadAllText(@"E:\Programowanie\Ćwiczenia\Portfel\Email\RegistrationEmail.txt");
+            return text;
+        }
+        public string ReadDebetFile()
+        {
+            string text = File.ReadAllText(@"E:\Programowanie\Ćwiczenia\Portfel\Email\DebetEmail.txt");
             return text;
         }
     }

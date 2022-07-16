@@ -1,5 +1,6 @@
 ﻿using Portfel.IO;
 using Portfel.Model;
+using Portfel.SendEmail;
 using Portfel.SQL;
 using System;
 using System.Collections.Generic;
@@ -36,6 +37,8 @@ namespace Portfel.Forms
             try
             {
                 value = double.Parse(profitBox.Text);
+                isValueLessThan0(value);
+
             }catch(FormatException f)
             {
                 MessageBox.Show(f.Message);
@@ -52,7 +55,15 @@ namespace Portfel.Forms
             profitBox.Text = "";
 
         }
-
+        private void isValueLessThan0(double value)
+        {
+            if (value <= 0)
+            {
+                MessageBox.Show("Wpisywana kwota nie może być mniejsza, bądź równa 0"
+                    , "Message", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+        }
         private void monthCalendar1_DateChanged(object sender, DateRangeEventArgs e)
         {
 
@@ -79,7 +90,9 @@ namespace Portfel.Forms
             try
             {
                 value = double.Parse(expenseBox.Text);
-            }catch(FormatException f)
+                isValueLessThan0(value);
+            }
+            catch(FormatException f)
             {
                 MessageBox.Show(f.Message);
             }
@@ -114,8 +127,27 @@ namespace Portfel.Forms
             {
                 valueOfBalance = balance - value;
             }
+            if (valueOfBalance <= 0)
+            {
+                debetEmail();
+            }
             return valueOfBalance;
 
+        }
+        private void debetEmail()
+        {
+            var email = new Send(new EmailParams
+            {
+                HostSmtp = "smtp.gmail.com",
+                Port = 587,
+                EnableSsl = true,
+                SenderName = "Kamil Wolak",
+                SenderEmail = "thewolok@gmail.com",
+                SenderEmailPassword = "zvksayjiyzglsdxw"
+            });
+            FileManager file = new FileManager();
+            email.SendEmail(Wallet.actuallyUser.EMail, Wallet.actuallyUser.FirstName
+                , "Debet", file.ReadDebetFile());
         }
 
         private void displayExpense_Click(object sender, EventArgs e)

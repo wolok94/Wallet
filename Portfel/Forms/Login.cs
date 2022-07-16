@@ -37,15 +37,15 @@ namespace Portfel
         {
             if (string.IsNullOrEmpty(PasswordBox.Text))
             {
-                MessageBox.Show("Please enter your password.", "Message", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Wpisz swoje hasło", "Message", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
             PasswordBox.Text = Encrypter.Encrypt(PasswordBox.Text);
             User user = sql.Login(EmailBox.Text, PasswordBox.Text);
             if (user is null)
             {
-                label3.Visible = true;
-                label3.Text = "Incorrect email or password";
+                MessageBox.Show("Nieprawidłowy e-mail lub hasło", "Message", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
             }
             else
             {
