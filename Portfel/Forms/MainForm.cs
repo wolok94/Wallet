@@ -55,6 +55,7 @@ namespace Portfel.Forms
             profitBox.Text = "";
 
         }
+        // checks if the value is <=0
         private void isValueLessThan0(double value)
         {
             if (value <= 0)
@@ -75,6 +76,7 @@ namespace Portfel.Forms
             
             
         }
+        // setting Value of income in label
         private void settingValuesOfIncome()
         {
             double value = sql.getBalance(Wallet.actuallyUser);
@@ -105,16 +107,19 @@ namespace Portfel.Forms
             addBalanceToDataBase(countValueOfBalance(value));
             settingValuesOfIncome();
         }
+        // adding expense to database
         private void addExpenseToDataBase(double value, string name, DateTime date)
         {
             expense = new Expense(value, name, date);
             sql.addExpense(Wallet.actuallyUser, expense);
         }
+        // adding balance to database
         private void addBalanceToDataBase(double valueOfBalance)
         {
             Balance balance = new Balance(valueOfBalance, Wallet.actuallyUser.Id);
             sql.addBalance(Wallet.actuallyUser, balance);
         }
+        // calculates the balance value
         private double countValueOfBalance(double value)
         {
             double balance = sql.getBalance(Wallet.actuallyUser);
@@ -134,6 +139,7 @@ namespace Portfel.Forms
             return valueOfBalance;
 
         }
+        // sends email if a debit has been accrued
         private void debetEmail()
         {
             var email = new Send(new EmailParams
@@ -149,13 +155,13 @@ namespace Portfel.Forms
             email.SendEmail(Wallet.actuallyUser.EMail, Wallet.actuallyUser.FirstName
                 , "Debet", file.ReadDebetFile());
         }
-
+        // display expense on data grid view
         private void displayExpense_Click(object sender, EventArgs e)
         {
             dgv.AutoGenerateColumns = false;
             dgv.DataSource = sql.getExpenses(Wallet.actuallyUser);
         }
-
+        // display income on data grid view
         private void displayIncome_Click(object sender, EventArgs e)
         {
             dgv.Visible = false;
@@ -169,7 +175,7 @@ namespace Portfel.Forms
         {
 
         }
-
+        // generate report
         private void button1_Click(object sender, EventArgs e)
         {
             GenerateExcelChart gen = new GenerateExcelChart();

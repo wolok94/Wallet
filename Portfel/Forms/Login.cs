@@ -34,14 +34,16 @@ namespace Portfel
         }
 
         private void button1_Click(object sender, EventArgs e)
-        {
+        {   // this conditional statement checks if you have entered a password
             if (string.IsNullOrEmpty(PasswordBox.Text))
             {
                 MessageBox.Show("Wpisz swoje hasło", "Message", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
+            // encrypt password
             PasswordBox.Text = Encrypter.Encrypt(PasswordBox.Text);
             User user = sql.Login(EmailBox.Text, PasswordBox.Text);
+            //checks validation email and password
             if (user is null)
             {
                 MessageBox.Show("Nieprawidłowy e-mail lub hasło", "Message", MessageBoxButtons.OK, MessageBoxIcon.Warning);

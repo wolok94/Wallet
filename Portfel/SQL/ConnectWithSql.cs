@@ -11,10 +11,13 @@ using System.Threading.Tasks;
 
 namespace Portfel.SQL
 {
+    // this class is responsible for comunication with the database
     public class ConnectWithSql
     {
         private readonly string connectionString = "Server=LAPTOP-VQRVD89V\\SQLEXPRESS;Database=Wallet;Trusted_Connection=True;";
         private User actuallyUser;
+
+        // this method insert the user to the database
         public void Registration(User user)
         {
             using (SqlConnection conn = new SqlConnection())
@@ -30,6 +33,7 @@ namespace Portfel.SQL
 
 
         }
+        // this method checks if there is a user with the specified email and password
         public User Login(string email, string password)
         {
             using (SqlConnection conn = new SqlConnection())
@@ -57,6 +61,7 @@ namespace Portfel.SQL
 
             return actuallyUser;
         }
+        // this method returns all users from database
         public List<User> getAll()
         {
             List<User> users = new List<User>();
@@ -88,6 +93,7 @@ namespace Portfel.SQL
 
             return users;
         }
+        // this method returns enrypted password from database
         public string getEncyptedPassword(string email)
         {
             using (SqlConnection conn = new SqlConnection())
@@ -113,6 +119,7 @@ namespace Portfel.SQL
 
 
         }
+        // this method insert income to the database
         public void addIncome(User user, Income income)
         {
             using (SqlConnection conn = new SqlConnection())
@@ -127,6 +134,7 @@ namespace Portfel.SQL
 
             }
         }
+        // this method returns higher income id
         public int getHigherIncomeId()
         {
             using (SqlConnection conn = new SqlConnection())
@@ -160,6 +168,7 @@ namespace Portfel.SQL
 
 
         }
+        // this method return income from databse
         public double getIncome(User user)
         {
             double value = 0;
@@ -190,6 +199,7 @@ namespace Portfel.SQL
                 return value;
             }
         }
+        // this method inserts expense to the database
         public void addExpense(User user, Expense expense)
         {
             using (SqlConnection conn = new SqlConnection())
@@ -204,6 +214,7 @@ namespace Portfel.SQL
 
             }
         }
+        // this method insterts balance to the database
         public void addBalance(User user, Balance balance)
         {
             using (SqlConnection conn = new SqlConnection())
@@ -218,6 +229,7 @@ namespace Portfel.SQL
 
             }
         }
+        // this method returns balance from database
         public double getBalance(User user)
         {
             double value = 0;
@@ -241,6 +253,7 @@ namespace Portfel.SQL
                 return value;
             }
         }
+        // this method return higher expense id
         public int getHigherExpenseId()
         {
             using (SqlConnection conn = new SqlConnection())
@@ -272,6 +285,7 @@ namespace Portfel.SQL
                 return 0;
             }
         }
+        // this method returns higher balance id
         public int getHigherBalanceId()
         {
             using (SqlConnection conn = new SqlConnection())
@@ -303,6 +317,7 @@ namespace Portfel.SQL
                 return 0;
             }
         }
+        // this method returns all user expenses
         public DataTable getExpenses(User user)
         {
             DataTable dtbl = new DataTable();
@@ -322,6 +337,7 @@ namespace Portfel.SQL
             }
             return dtbl;
         }
+        // this method returns all user incomes
         public DataTable getIncomes(User user)
         {
             DataTable dtbl = new DataTable();
@@ -341,6 +357,7 @@ namespace Portfel.SQL
             }
             return dtbl;
         }
+        // this method returns the amount of expenses for a given product
         public double getExpenseByProductName(User user, string productName)
         {
             double value = 0;

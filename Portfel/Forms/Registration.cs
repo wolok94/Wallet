@@ -53,6 +53,7 @@ namespace Portfel.Forms
             login.ShowDialog();
 
         }
+        // validate entered data
         private void check()
         {
             if (string.IsNullOrEmpty(passwordBox.Text))
@@ -82,6 +83,7 @@ namespace Portfel.Forms
                 return;
             }
         }
+        // validate length of password
         private bool regexValidation(string password)
         {
             Regex regex = new Regex("^(?=.*?[a-z])(?=.*?[0-9]).{8,}$");
@@ -92,10 +94,12 @@ namespace Portfel.Forms
             else
                 return false;
         }
+        // shows messagebox
         private void showMessageBox(string message)
         {
             MessageBox.Show(message, "Błąd", MessageBoxButtons.OK, MessageBoxIcon.Warning);
         }
+        // validate email address
         private bool isValid (string emailAddress)
         {
             try
@@ -110,6 +114,7 @@ namespace Portfel.Forms
                 return false;
             }
         }
+        // checks if that email is already in the database
         private bool isThatEmail(List<User> users)
         {
             if (users.Any(u => u.EMail == emailBox.Text))
@@ -124,6 +129,7 @@ namespace Portfel.Forms
 
             passwordBox.PasswordChar = '*';
         }
+        // sends registration email
         private void sendEmail(string eMail, string firstName)
         {
             var email = new Send(new EmailParams

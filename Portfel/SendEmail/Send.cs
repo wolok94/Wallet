@@ -31,7 +31,7 @@ namespace Portfel.SendEmail
             senderEmailPassword = emailParams.SenderEmailPassword;
             senderName = emailParams.SenderName;
         }
-
+        // this method sens email
         public  async Task SendEmail(string email, string name, string subject, string lyric, string password)
         {
             smtp = new SmtpClient
@@ -59,6 +59,7 @@ namespace Portfel.SendEmail
 
 
         }
+        // this overloaded method sends email
         public async Task SendEmail(string email, string name, string subject, string lyric)
         {
             smtp = new SmtpClient
@@ -86,7 +87,7 @@ namespace Portfel.SendEmail
 
 
         }
-
+        // releases all resources
         private void OnSendCompleted(object sender, AsyncCompletedEventArgs e)
         {
             smtp.Dispose();

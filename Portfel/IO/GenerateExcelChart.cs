@@ -29,7 +29,7 @@ namespace Portfel.IO
             
 
         }
-
+        // this method creates an excel file, enters data in it and creates a chart based on it
         private async Task SaveExcelFile(List<ExpenseDto> expenses, FileInfo file)
         {
             DeleteIfExists(file);
@@ -78,6 +78,7 @@ namespace Portfel.IO
             
              OpenFile();
                }
+        // this method opens the excel file
         private void OpenFile()
         {
             var proc = new Process();
@@ -87,7 +88,7 @@ namespace Portfel.IO
             };
             proc.Start();
         }
-        
+        // this mettodh removes the excel file if it exists
         private void DeleteIfExists(FileInfo file)
         {
             if (file.Exists)
@@ -95,7 +96,7 @@ namespace Portfel.IO
                 file.Delete();
             }
         }
-
+        // this method retrieves data from database and maps expenses from database on expensedto
         private List<ExpenseDto> GetData()
         {
             List<ExpenseDto> expenses = new List<ExpenseDto>();

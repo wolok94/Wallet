@@ -8,6 +8,7 @@ namespace Portfel.IO
 {
     public class FileManager
     {
+        // reads text from a file
         public string ReadFile()
         {
             string text = File.ReadAllText(@"E:\Programowanie\Ćwiczenia\Portfel\Email\RegistrationEmail.txt");
