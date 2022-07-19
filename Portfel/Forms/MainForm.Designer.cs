@@ -1,4 +1,6 @@
-﻿namespace Portfel.Forms
+﻿using System.Data.SqlClient;
+
+namespace Portfel.Forms
 {
     partial class MainForm
     {
@@ -47,7 +49,7 @@
             this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.sqlCommand1 = new Microsoft.Data.SqlClient.SqlCommand();
+            this.sqlCommand1 = new System.Data.SqlClient.SqlCommand();
             this.raportButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgv)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgv2)).BeginInit();
@@ -200,6 +202,7 @@
             this.dgv2.Size = new System.Drawing.Size(342, 132);
             this.dgv2.TabIndex = 12;
             this.dgv2.Visible = false;
+            this.dgv2.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgv2_CellContentClick);
             // 
             // dataGridViewTextBoxColumn1
             // 
@@ -286,7 +289,7 @@
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
-        private Microsoft.Data.SqlClient.SqlCommand sqlCommand1;
+        private SqlCommand sqlCommand1;
         private Button raportButton;
     }
 }

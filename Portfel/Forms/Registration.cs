@@ -8,18 +8,18 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Portfel.Model;
-using Portfel.SQL;
 using System.Security.Cryptography;
 using Portfel.SendEmail;
 using Portfel.IO;
 using System.Net.Mail;
 using System.Text.RegularExpressions;
+using Portfel.Sql;
 
 namespace Portfel.Forms
 {
     public partial class Registration : Form
     {
-        private ConnectWithSql sql = new ConnectWithSql();
+        private DataAccess dataAccess = new DataAccess();
         private User user;
         private Login login = new Login();
         private string decryptedPassword;
@@ -45,7 +45,7 @@ namespace Portfel.Forms
             string eMail = emailBox.Text;
             string password = passwordBox.Text;
             user = new User(firstName, lastName, eMail, password);
-            sql.Registration(user);
+            dataAccess.Registration(user);
 
             sendEmail(eMail, firstName);
             
@@ -67,7 +67,7 @@ namespace Portfel.Forms
                 return;
             }
 
-            if (isThatEmail(sql.getAll()))
+            if (isThatEmail(dataAccess.GetAll()))
             {
                 showMessageBox("Istnieje już użytkownik z takim adresem e-mail");
                 return;

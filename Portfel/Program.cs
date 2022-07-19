@@ -2,7 +2,7 @@
 
 using Portfel.Exceptions;
 using Portfel.Model;
-using Portfel.SQL;
+using Portfel.Sql;
 using System.Data.SqlClient;
 
 namespace Portfel
@@ -17,13 +17,13 @@ namespace Portfel
         {
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.
-            ConnectWithSql sql = new ConnectWithSql();
             Wallet wallet = new Wallet();
-            wallet.Users = sql.getAll();
+            DataAccess dataAccess = new DataAccess();
+            wallet.Users = dataAccess.GetAll();
 
-                Income.id = sql.getHigherIncomeId();
-                Expense.id = sql.getHigherExpenseId();
-                Balance.id = sql.getHigherBalanceId();
+                Income.id = dataAccess.GetHigherIncomeId();
+                Expense.id = dataAccess.GetHigherExpenseId();
+                Balance.id = dataAccess.GetHigherBalanceId();
 
                 ApplicationConfiguration.Initialize();
                 Application.Run(new Logowanie());

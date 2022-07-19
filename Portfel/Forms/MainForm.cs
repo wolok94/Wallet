@@ -1,7 +1,7 @@
 ﻿using Portfel.IO;
 using Portfel.Model;
 using Portfel.SendEmail;
-using Portfel.SQL;
+using Portfel.Sql;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -17,7 +17,7 @@ namespace Portfel.Forms
 {
     public partial class MainForm : Form
     {
-        ConnectWithSql sql = new ConnectWithSql();
+        DataAccess dataAccess = new DataAccess();
         Income income;
         Expense expense;
         public MainForm()
@@ -46,11 +46,11 @@ namespace Portfel.Forms
             DateTime date = new DateTime(); ;
             date = monthCalendar1.SelectionRange.Start;
             income = new Income(value, date);
-            sql.addIncome(Wallet.actuallyUser, income);
+            dataAccess.AddIncome(Wallet.actuallyUser, income);
 
-            double valueOfBalance = sql.getBalance(Wallet.actuallyUser) + value;
+            double valueOfBalance = dataAccess.GetBalance(Wallet.actuallyUser) + value;
             Balance balance = new Balance(valueOfBalance, Wallet.actuallyUser.Id);
-            sql.addBalance(Wallet.actuallyUser, balance);
+            dataAccess.AddBalance(balance);
             settingValuesOfIncome();
             profitBox.Text = "";
 
@@ -79,11 +79,11 @@ namespace Portfel.Forms
         // setting Value of income in label
         private void settingValuesOfIncome()
         {
-            double value = sql.getBalance(Wallet.actuallyUser);
+            double value = dataAccess.GetBalance(Wallet.actuallyUser);
             if (value > 0)
             label1.Text = "Na twoim koncie pozostało: " + value.ToString();
             else
-                label1.Text = "Na twoim koncie pozostało: " + sql.getIncome(Wallet.actuallyUser);
+                label1.Text = "Na twoim koncie pozostało: " + dataAccess.GetIncome(Wallet.actuallyUser);
         }
 
         private void WasteButton_Click(object sender, EventArgs e)
@@ -111,22 +111,22 @@ namespace Portfel.Forms
         private void addExpenseToDataBase(double value, string name, DateTime date)
         {
             expense = new Expense(value, name, date);
-            sql.addExpense(Wallet.actuallyUser, expense);
+            dataAccess.AddExpense(Wallet.actuallyUser, expense);
         }
         // adding balance to database
         private void addBalanceToDataBase(double valueOfBalance)
         {
             Balance balance = new Balance(valueOfBalance, Wallet.actuallyUser.Id);
-            sql.addBalance(Wallet.actuallyUser, balance);
+            dataAccess.AddBalance(balance);
         }
         // calculates the balance value
         private double countValueOfBalance(double value)
         {
-            double balance = sql.getBalance(Wallet.actuallyUser);
+            double balance = dataAccess.GetBalance(Wallet.actuallyUser);
             double valueOfBalance = 0;
             if (balance == 0)
             {
-                valueOfBalance = double.Parse(sql.getIncome(Wallet.actuallyUser).ToString()) - value;
+                valueOfBalance = double.Parse(dataAccess.GetIncome(Wallet.actuallyUser).ToString()) - value;
             }
             else
             {
@@ -158,8 +158,10 @@ namespace Portfel.Forms
         // display expense on data grid view
         private void displayExpense_Click(object sender, EventArgs e)
         {
+            dgv2.Visible = false;
+            dgv.Visible = true;
             dgv.AutoGenerateColumns = false;
-            dgv.DataSource = sql.getExpenses(Wallet.actuallyUser);
+            dgv.DataSource = dataAccess.GetExpenses(Wallet.actuallyUser);
         }
         // display income on data grid view
         private void displayIncome_Click(object sender, EventArgs e)
@@ -167,7 +169,7 @@ namespace Portfel.Forms
             dgv.Visible = false;
             dgv2.Visible = true;
             dgv2.AutoGenerateColumns = false;
-            dgv2.DataSource = sql.getIncomes(Wallet.actuallyUser);
+            dgv2.DataSource = dataAccess.GetIncomes(Wallet.actuallyUser);
             
         }
 
@@ -180,6 +182,11 @@ namespace Portfel.Forms
         {
             GenerateExcelChart gen = new GenerateExcelChart();
             gen.Generate();
+        }
+
+        private void dgv2_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
         }
     }
 }

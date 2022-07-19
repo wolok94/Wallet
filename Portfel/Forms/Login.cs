@@ -1,6 +1,6 @@
 ﻿using Portfel.Forms;
 using Portfel.Model;
-using Portfel.SQL;
+using Portfel.Sql;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -15,9 +15,10 @@ namespace Portfel
 {
     public partial class Login : Form
     {
-        private ConnectWithSql sql = new ConnectWithSql();
+        
         private Wallet wallet = new Wallet();
         private MainForm main = new MainForm();
+        private DataAccess data = new DataAccess();
         public Login()
         {
             InitializeComponent();
@@ -42,7 +43,7 @@ namespace Portfel
             }
             // encrypt password
             PasswordBox.Text = Encrypter.Encrypt(PasswordBox.Text);
-            User user = sql.Login(EmailBox.Text, PasswordBox.Text);
+            User user = data.Login(EmailBox.Text, PasswordBox.Text);
             //checks validation email and password
             if (user is null)
             {

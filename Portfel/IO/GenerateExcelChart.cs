@@ -2,7 +2,7 @@
 using OfficeOpenXml;
 using OfficeOpenXml.Style;
 using Portfel.Model;
-using Portfel.SQL;
+using Portfel.Sql;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -16,7 +16,7 @@ namespace Portfel.IO
 {
     public class GenerateExcelChart
     {
-        private ConnectWithSql sql = new ConnectWithSql();
+        DataAccess dataAccess = new DataAccess();
         private readonly string path = @"E:\Programowanie\Ćwiczenia\Portfel\Raport.xlsx";
         public async Task Generate()
         {
@@ -43,19 +43,19 @@ namespace Portfel.IO
 
             var headerFeesExpense = ws.Cells[$"A{expenses.Count + 4}"].LoadFromText("Opłaty");
             var countedFeesExpense = ws.Cells[$"A{expenses.Count + 5}"]
-                .LoadFromText(sql.getExpenseByProductName(Wallet.actuallyUser, "Opłaty").ToString());
+                .LoadFromText(dataAccess.GetExpenseByProductName(Wallet.actuallyUser, "Opłaty").ToString());
 
             var headerFoodExpense = ws.Cells[$"B{expenses.Count + 4}"].LoadFromText("Produkty spożywcze");
             var countedFoodExpense = ws.Cells[$"B{expenses.Count + 5}"]
-            .LoadFromText(sql.getExpenseByProductName(Wallet.actuallyUser, "Produkty Spożywcze").ToString());
+            .LoadFromText(dataAccess.GetExpenseByProductName(Wallet.actuallyUser, "Produkty Spożywcze").ToString());
 
             var headerCleaningExpense = ws.Cells[$"C{expenses.Count + 4}"].LoadFromText("Środki czyszczące");
             var countedCleaningExpense = ws.Cells[$"C{expenses.Count + 5}"]
-            .LoadFromText(sql.getExpenseByProductName(Wallet.actuallyUser, "Środki czyszczące").ToString());
+            .LoadFromText(dataAccess.GetExpenseByProductName(Wallet.actuallyUser, "Środki czyszczące").ToString());
 
             var headerFExpense = ws.Cells[$"D{expenses.Count + 4}"].LoadFromText("Paliwo");
             var countedFuelExpense = ws.Cells[$"D{expenses.Count + 5}"]
-            .LoadFromText(sql.getExpenseByProductName(Wallet.actuallyUser, "Paliwo").ToString());
+            .LoadFromText(dataAccess.GetExpenseByProductName(Wallet.actuallyUser, "Paliwo").ToString());
 
             ws.Cells["A1"].Value = "Raport wydatków";
             ws.Cells["A1:C1"].Merge = true;
@@ -101,7 +101,7 @@ namespace Portfel.IO
         {
             List<ExpenseDto> expenses = new List<ExpenseDto>();
             DataTable table = new DataTable();
-            table = sql.getExpenses(Wallet.actuallyUser);
+            table = dataAccess.GetExpenses(Wallet.actuallyUser);
             var results = table.Rows.Cast<DataRow>().Where(x=> x.Field<int>("UserId") == Wallet.actuallyUser.Id).ToList();
             
             foreach (DataRow row in results)
